@@ -2,10 +2,9 @@
 
 // hapi server framework
 const Hapi = require('hapi');
-
-
-
 const server = new Hapi.Server();
+
+require('./lib/configHandler.js')();
 
 // set up the server
 server.connection({
@@ -13,15 +12,11 @@ server.connection({
     port: '1337'
 });
 
-let pluginLoader = require('./lib/plugins')(server);
-
-pluginLoader.then(() => {
+require('./lib/plugins')(server).then(() => {
     // set up the routes
     let routes = require('./lib/routes/');
     routes.resolve(server);
 });
-
-
 
 
 server.start((err) => {

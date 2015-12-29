@@ -1,7 +1,7 @@
 node_modules/*
 newrelic_agent.log
 
-Config.json
+config.js
 .DS_Store
 
 npm-debug.log
