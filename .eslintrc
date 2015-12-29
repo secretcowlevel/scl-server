@@ -1,0 +1,47 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "node": true,
+        "es6": true
+    },
+
+    "plugins": [
+    ],
+
+    "settings": {
+        "ecmascript": 6
+    },
+
+    "ecmaFeatures": {
+        "jsx": true
+    },
+
+    "rules": {
+        "comma-dangle": 2,
+        "no-extra-semi": 2,
+        "camelcase": [2, {"properties": "always"}],
+        "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+        "no-underscore-dangle": 0,
+        "strict": 0,
+        "no-trailing-spaces": 0,
+        "no-undef": 1,
+        "no-unused-vars": 2,
+        "no-console": 1,
+        "eqeqeq": [2, "smart"],
+        "quotes": [2, "single"]
+    },
+
+    "globals": {
+        "document": true,
+        "window": true,
+        "karma": true,
+        "chrome": true,
+        "jest": true,
+        "describe": true,
+        "it": true,
+        "beforeEach": true,
+        "expect": true,
+        "runs": true,
+        "waitsFor": true
+    }
+}

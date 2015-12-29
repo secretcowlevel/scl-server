@@ -1,0 +1,7 @@
+node_modules/*
+newrelic_agent.log
+
+Config.json
+.DS_Store
+
+npm-debug.log
