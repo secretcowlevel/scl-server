@@ -6,6 +6,9 @@ exports.name = 'SCL API Template';
 // The Version number of the application
 exports.version = pjson.version;
 
+// JWT Secret
+exports.JWT_SECRET = 'nottoosecrethuh';
+
 // MongoDB Connection Information
 exports.mongoDB = [{
     'server': '127.0.0.1',
