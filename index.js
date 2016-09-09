@@ -29,6 +29,7 @@ require('./lib/plugins')(server)
 .then(() => {
     // set up the routes
     let routes = require('./lib/routes/');
+
     routes.resolve(server);
 })
 .catch((err) => {
