@@ -1,13 +1,14 @@
-'use strict';
 
+require('./lib/configHandler.js')();
 // hapi server framework
 const Hapi = require('hapi');
-const server = new Hapi.Server();
 const dbUtils = require('./lib/helpers/dbUtils.js');
 const mongoose = require('mongoose');
 global.pjson = require('./package.json');
-require('./lib/configHandler.js')();
+const authUtils = require('./lib/helpers/authUtils.js');
+const routes = require('./lib/routes/');
 
+const server = new Hapi.Server();
 // set up the server
 server.connection({
     host: 'localhost',
@@ -20,7 +21,7 @@ require('./lib/plugins')(server)
 .then(() => {
     server.auth.strategy('token', 'jwt', {
         key: global.Config.JWT_SECRET,
-        validateFunc: require('./lib/helpers/authUtils.js').validateToken,
+        validateFunc: authUtils.validateToken,
         verifyOptions: {
             algorithms: ['HS256']
         }
@@ -28,12 +29,10 @@ require('./lib/plugins')(server)
 })
 .then(() => {
     // set up the routes
-    let routes = require('./lib/routes/');
-
     routes.resolve(server);
 })
 .catch((err) => {
-    console.log(`ERROR STARTING SERVER ${err}`);
+    console.log(`ERROR STARTING SERVER ${err}`); // eslint-disable-line
 });
 
 

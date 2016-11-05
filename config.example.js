@@ -2,6 +2,8 @@
 const pjson = require('./package.json');
 // The Name of the Application
 exports.name = 'SCL API Template';
+// the Base URL to use
+exports.url = 'http://localhost:1337';
 
 // The Version number of the application
 exports.version = pjson.version;
@@ -11,9 +13,15 @@ exports.JWT_SECRET = 'nottoosecrethuh';
 
 // MongoDB Connection Information
 exports.mongoDB = [{
-    'server': '127.0.0.1',
-    'port': '27017',
-    'database': 'scl',
-    'user': '',
-    'password': ''
+    server: '127.0.0.1',
+    port: '27017',
+    database: 'scl',
+    user: '',
+    password: ''
 }];
+
+// Mandrill
+exports.mandrill = {
+    key: '',
+    from: 'info@secretcowlevel.com'
+};

@@ -9,11 +9,6 @@
         "comma-dangle": [2, "never"],
         "max-len": [1, 160, 4], # 120?
         "object-curly-spacing": [2, "never"],
-        # consider turning these on!!
-        "object-shorthand": [2, "never"],
-        "prefer-const": 0,
-        "arrow-body-style": 0,
-        "no-console": 0
-
+        "no-underscore-dangle": [2, { "allow": [ "_id"] }]
     }
 }
