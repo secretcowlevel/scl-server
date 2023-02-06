@@ -1,7 +1,7 @@
-node_modules/*
-newrelic_agent.log
-
-config.js
+.env
+node_modules
 .DS_Store
-
-npm-debug.log
+coverage
+yarn-error.log
+.eslintcache
+dist
