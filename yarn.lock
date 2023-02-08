@@ -1864,10 +1864,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@secretcowlevel/eslint-config-secretcowlevel@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@secretcowlevel/eslint-config-secretcowlevel/-/eslint-config-secretcowlevel-0.0.1.tgz#d0154c4e2759f3588e4df8fc0ac16481281cfcc6"
-  integrity sha512-7rxWCeNNaDLtN20EfGiBKGZpSViN0cdiDUdfkdKo+p7fkJxwldFn13shv/L+hvRc09kthSO/3U6soFP8j0N2lQ==
+"@secretcowlevel/eslint-config-secretcowlevel@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@secretcowlevel/eslint-config-secretcowlevel/-/eslint-config-secretcowlevel-0.0.2.tgz#d80f6e3dab23a4b0a016aa813f7ee1ac5f117beb"
+  integrity sha512-yK52HvK5Nvywdd4GNVv39yOKTQO81pKVzK/CjZi+qb3T1hTEh1gkkU3UUj2wSHAwA7j2mWSvROEetj5yomKJIg==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.50.0"
     "@typescript-eslint/parser" "^5.50.0"
