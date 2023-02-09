@@ -1,0 +1,46 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main, github-actions ]
+  pull_request:
+    branches: [ main ]
+env:
+  HOSTNAME: ${{ secrets.HOSTNAME }}
+  JWT_SECRET: testing.jwt.secret
+  MONGODB_CONNECTION_STRING: mongodb://mongoadmin:secret@localhost:27017/sclservertest?authSource=admin
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x] 
+        mongodb-version: ['4.2', '4.4', '5.0', '6.0'] 
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+          mongodb-username: mongoadmin
+          mongodb-password: secret
+          mongodb-db: sclservertest
+
+      - run: git config --global url."https://${{ secrets.PAT }}@github.com/".insteadOf ssh://git@github.com/
+
+      # - name: Yarn install cache
+      #   uses: c-hive/gha-yarn-cache@v1
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Test
+        run: yarn test
