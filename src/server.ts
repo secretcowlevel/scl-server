@@ -3,6 +3,7 @@ import routes from './routes/index'
 import { setupPlugins } from './plugins/'
 import { setupAuthStrategies } from './routes/auth/utils'
 import { init as dbInit } from './database/'
+import { type Mongoose } from 'mongoose'
 
 const server: Server = new Hapi.Server({
   port: 1337,
@@ -12,12 +13,17 @@ const server: Server = new Hapi.Server({
   },
 })
 
-export const init = async (): Promise<Server> => {
+interface ServerInit {
+  db: Mongoose
+  server: Server
+}
+
+export const init = async (): Promise<ServerInit> => {
   // setup plugins
   await setupPlugins(server)
 
   // setup database
-  await dbInit()
+  const db = await dbInit()
 
   // setup authentication
   setupAuthStrategies(server)
@@ -28,7 +34,7 @@ export const init = async (): Promise<Server> => {
   // initialize the server
   await server.initialize()
 
-  return server
+  return { server, db }
 }
 
 export const start = async (): Promise<Server> => {

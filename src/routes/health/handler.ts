@@ -1,6 +1,5 @@
 import { type Request, type ResponseToolkit, type ResponseObject } from '@hapi/hapi'
 import User from '../../database/models/User'
-// import { User } from '../../database/models/user'
 
 export const getHealth = (request: Request, h: ResponseToolkit): ResponseObject => {
   return h.response('Healthy!')

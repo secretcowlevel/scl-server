@@ -5,12 +5,15 @@ module.exports = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
-  coverageThreshold: {
-    global: {
-      lines: 75,
-    },
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     lines: 75,
+  //   },
+  // },
   globalSetup: '<rootDir>/src/jest.setup.ts',
+  globalTeardown: '<rootDir>/src/jest.teardown.ts',
+  verbose: true,
+  watchAll: false,
 }

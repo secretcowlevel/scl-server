@@ -1,11 +1,18 @@
-import mongoose from 'mongoose'
+import mongoose, { type Mongoose } from 'mongoose'
 
-const init = async (): Promise<void> => {
+const init = async (): Promise<Mongoose> => {
   try {
-    await mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
+    if (globalThis.DB !== undefined) {
+      return globalThis.DB
+    } else {
+      console.log('CONNECTED TO MONGODB') // eslint-disable-line no-console
+      await mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
+    }
   } catch (error) {
     console.error(`Unable to connect to the database`, error) // eslint-disable-line no-console
   }
+
+  return mongoose
 }
 
-export { init }
+export { init, mongoose as db }

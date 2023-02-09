@@ -31,7 +31,7 @@ interface UserModel extends Model<IUser, unknown, IUserMethods> {
 // * Schema definition!
 const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   name: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: String,
 })
 
