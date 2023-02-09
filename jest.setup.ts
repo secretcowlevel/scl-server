@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { init } from './server'
+import { init } from './src/server'
 
 export default async (): Promise<void> => {
   const { server, db } = await init()
