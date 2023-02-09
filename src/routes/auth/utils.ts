@@ -20,7 +20,7 @@ export const generateToken = (userId: string): string => {
       sessionId,
       userId,
     },
-    process.env.JWT_SECRET as string,
+    process.env.JWT_SECRET,
     {
       algorithm: 'HS256',
       expiresIn: '1 week',

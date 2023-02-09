@@ -6,7 +6,7 @@ const init = async (): Promise<Mongoose> => {
       return globalThis.DB
     } else {
       console.log('CONNECTED TO MONGODB') // eslint-disable-line no-console
-      await mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
+      await mongoose.connect(process.env.MONGODB_CONNECTION_STRING)
     }
   } catch (error) {
     console.error(`Unable to connect to the database`, error) // eslint-disable-line no-console
