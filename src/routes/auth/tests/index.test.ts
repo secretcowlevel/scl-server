@@ -135,6 +135,16 @@ describe('Auth Module', () => {
       expect(data.statusCode).toBe(401)
     })
 
+    it('should return unauthorized error if invalid token is specified', async () => {
+      const options = {
+        method: 'GET',
+        url: '/private',
+        headers: { authorization: `Bearer INVALIDTOKEN` },
+      }
+      const data = await globalThis.SERVER.inject(options)
+      expect(data.statusCode).toBe(401)
+    })
+
     it('should return some info with a proper token', async () => {
       const options = {
         method: 'GET',
@@ -144,5 +154,17 @@ describe('Auth Module', () => {
       const data = await globalThis.SERVER.inject(options)
       expect(data.statusCode).toBe(200)
     })
+  })
+})
+
+describe('GET /', () => {
+  it('should return test messaging', async () => {
+    const options = {
+      method: 'GET',
+      url: '/',
+    }
+    const data = await globalThis.SERVER.inject(options)
+    expect(data.statusCode).toBe(200)
+    expect(data.payload).toBe('Hello World')
   })
 })

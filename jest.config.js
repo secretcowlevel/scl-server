@@ -14,6 +14,6 @@ module.exports = {
   // },
   globalSetup: '<rootDir>/jest.setup.ts',
   globalTeardown: '<rootDir>/jest.teardown.ts',
-  verbose: true,
+  verbose: false,
   watchAll: false,
 }

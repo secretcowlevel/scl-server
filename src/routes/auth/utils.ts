@@ -32,7 +32,8 @@ export const generateToken = (userId: string): string => {
 
 const validateToken = async (decoded: DecodedToken): Promise<ValidateTokenResponse> => {
   const user = await User.findOne({ _id: decoded.userId })
-  if (user == null) throw Boom.unauthorized()
+
+  if (user === null) throw Boom.unauthorized()
 
   return { isValid: true }
 }

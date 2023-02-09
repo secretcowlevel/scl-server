@@ -4,7 +4,7 @@ import { type Mongoose } from 'mongoose'
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NODE_ENV: 'development' | 'production'
+      NODE_ENV: 'development' | 'production' | 'test'
       JWT_SECRET: string
       MONGODB_CONNECTION_STRING: string
     }
