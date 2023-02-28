@@ -19,9 +19,11 @@ interface LoginOrRegisterResponse {
 
 export const login = async (request: Request): Promise<LoginOrRegisterResponse> => {
   const { email, password } = request.payload as LoginPayload
-
   const user = await User.checkPasswordAndReturnUser(email, password)
-  if (user === null) throw new Error('User not found')
+
+  if (user === null) {
+    throw new Error('User not found')
+  }
 
   return {
     token: generateToken(user.getIdentifierAsString()),
