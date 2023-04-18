@@ -7,6 +7,7 @@ declare global {
       NODE_ENV: 'development' | 'production' | 'test'
       JWT_SECRET: string
       MONGODB_CONNECTION_STRING: string
+      STRIPE_SECRET_KEY: string
     }
   }
   // for some reason VAR is required!
