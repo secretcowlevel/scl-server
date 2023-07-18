@@ -1,17 +1,15 @@
 import Joi from 'joi'
 
 export default {
-  login: {
+  checkout: {
     payload: Joi.object({
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-    }),
-  },
-  register: {
-    payload: Joi.object({
-      email: Joi.string().email().required(),
-      name: Joi.string().required(),
-      password: Joi.string().required(),
+      checkoutType: Joi.string().required(),
+      items: Joi.array().items(
+        Joi.object({
+          sku: Joi.string().required(),
+          quantity: Joi.number().required(),
+        }),
+      ),
     }),
   },
 }

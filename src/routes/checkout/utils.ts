@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import { type Server } from '@hapi/hapi'
 import Boom from '@hapi/boom'
 import User from '../../database/models/User'
+import StoreItem from '../../database/models/StoreItem'
 
 interface ValidateTokenResponse {
   isValid: boolean

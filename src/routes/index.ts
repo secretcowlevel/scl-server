@@ -1,11 +1,13 @@
 import { type ServerRoute } from '@hapi/hapi'
 import healthCheckRoutes from './health/route'
 import authRoutes from './auth/route'
+import checkoutRoutes from './checkout/route'
 
 const routes: ServerRoute[] = [
   // unique modules
   ...authRoutes,
   ...healthCheckRoutes,
+  ...checkoutRoutes,
   // crud modules
   // temp index route
   {

@@ -1,170 +1,51 @@
-let tempToken: string
+// let tempToken: string
+
+beforeAll(async () => {
+  // create an item thats instock
+  const activeItem = await globalThis.DB.models.StoreItem.create({
+    name: 'active item',
+    sku: 'active-item',
+    active: true,
+  })
+
+  await activeItem.save()
+
+  // create an item thats out of stock
+  const inactiveItem = await globalThis.DB.models.StoreItem.create({
+    name: 'inactive item',
+    sku: 'inactive-item',
+    active: false,
+  })
+
+  await inactiveItem.save()
+})
 
 afterAll(async () => {
-  await globalThis.DB.models.User.deleteMany({ email: 'justin@secretcowlevel.com' })
+  await globalThis.DB.models.StoreItem.deleteMany({})
 })
 
-describe('Auth Module', () => {
-  describe('POST /auth/register', () => {
-    it('should return 400 error if name is missing', async () => {
+describe('Checkout Module', () => {
+  describe('POST /checkout (unauthenticated)', () => {
+    it('should return 401 error if unauthenticated', async () => {
       const options = {
         method: 'POST',
-        url: '/auth/register',
-        payload: {
-          email: 'banana@banana.com',
-          password: 'this.is.a.test.password',
-        },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(400)
-    })
-
-    it('should return 400 error if email is missing', async () => {
-      const options = {
-        method: 'POST',
-        url: '/auth/register',
-        payload: {
-          name: 'banana@banana.com',
-          password: 'this.is.a.test.password',
-        },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(400)
-    })
-
-    it('should return 400 error if password is missing', async () => {
-      const options = {
-        method: 'POST',
-        url: '/auth/register',
-        payload: {
-          email: 'banana@banana.com',
-          name: 'Banana Bananan',
-        },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(400)
-    })
-
-    it('should return 200 if valid registration is passed', async () => {
-      const options = {
-        method: 'POST',
-        url: '/auth/register',
-        payload: {
-          name: 'Justin Reynard',
-          email: 'justin@secretcowlevel.com',
-          password: 'this.is.a.test.password',
-        },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(200)
-      expect(data.result).toHaveProperty('token')
-    })
-  })
-
-  describe('POST /auth/login', () => {
-    it('POST /auth/login should reject requests without an email', async () => {
-      const options = {
-        method: 'POST',
-        url: '/auth/login',
-        payload: {
-          password: 'banana',
-        },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(400)
-    })
-
-    it('POST /auth/login should reject requests without a password', async () => {
-      const options = {
-        method: 'POST',
-        url: '/auth/login',
-        payload: {
-          email: 'banana@banana.com',
-        },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(400)
-    })
-
-    it('POST /auth/login should accept a valid email/password combo but return an error if user isnt found', async () => {
-      const options = {
-        method: 'POST',
-        url: '/auth/login',
-        payload: {
-          email: 'banana@secretcowlevel.com',
-          password: 'this.is.a.test.password',
-        },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(400)
-    })
-
-    it('POST /auth/login should accept a valid email/password combo and return their token if they are correct', async () => {
-      const options = {
-        method: 'POST',
-        url: '/auth/login',
-        payload: {
-          email: 'justin@secretcowlevel.com',
-          password: 'this.is.a.test.password',
-        },
-      }
-
-      // this SHOULD be inferred from Hapi's handler where it is defined
-      // but it is not...
-      interface CopyOfDataFormat {
-        statusCode: number
-        result: {
-          token: string
-        }
-      }
-      const data = (await globalThis.SERVER.inject(options)) as CopyOfDataFormat
-
-      expect(data.statusCode).toBe(200)
-      expect(data.result).toHaveProperty('token')
-      tempToken = data?.result?.token
-    })
-  })
-
-  describe('GET /private', () => {
-    it('should return unauthorized error if no header is specified', async () => {
-      const options = {
-        method: 'GET',
-        url: '/private',
+        url: '/checkout',
+        payload: {},
       }
       const data = await globalThis.SERVER.inject(options)
       expect(data.statusCode).toBe(401)
     })
-
-    it('should return unauthorized error if invalid token is specified', async () => {
-      const options = {
-        method: 'GET',
-        url: '/private',
-        headers: { authorization: `Bearer INVALIDTOKEN` },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(401)
-    })
-
-    it('should return some info with a proper token', async () => {
-      const options = {
-        method: 'GET',
-        url: '/private',
-        headers: { authorization: `Bearer ${tempToken}` },
-      }
-      const data = await globalThis.SERVER.inject(options)
-      expect(data.statusCode).toBe(200)
-    })
   })
-})
 
-describe('GET /', () => {
-  it('should return test messaging', async () => {
-    const options = {
-      method: 'GET',
-      url: '/',
-    }
-    const data = await globalThis.SERVER.inject(options)
-    expect(data.statusCode).toBe(200)
-    expect(data.payload).toBe('Hello World')
+  describe('POST /checkout (authenticated)', () => {
+    it('should return 400 error if checkoutType is missing', async () => {
+      const options = {
+        method: 'POST',
+        url: '/checkout',
+        payload: {},
+      }
+      const data = await globalThis.SERVER.inject(options)
+      expect(data.statusCode).toBe(400)
+    })
   })
 })

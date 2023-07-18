@@ -1,7 +1,6 @@
 import Boom from '@hapi/boom'
 import { type Request } from '@hapi/hapi'
-// import User from '../../database/models/User'
-// import { generateToken } from './utils'
+import { StoreItem } from 'database/models'
 
 enum CheckoutType {
   STRIPE,
@@ -9,21 +8,31 @@ enum CheckoutType {
 
 interface CheckoutPayload {
   checkoutType: CheckoutType
+  items: Array<{
+    sku: string
+    quantity: number
+  }>
 }
 
 type CheckoutResponse = boolean
 
+// ** this is the POST, tells the server you INTEND to purchase this "cart" of items
 export const checkoutHandler = async (request: Request): Promise<CheckoutResponse> => {
-  const { checkoutType } = request.payload as CheckoutPayload
+  const { checkoutType, items = [] } = request.payload as CheckoutPayload
 
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw Boom.badImplementation('missing stripe configuration')
-  }
+  // first we need to make sure this purchase is good! Are the items available, etc
+  // const x = await StoreItem.findOne()
 
   switch (checkoutType) {
     case CheckoutType.STRIPE:
-    default:
+      if (process.env.STRIPE_SECRET_KEY === undefined) {
+        throw Boom.badImplementation('missing stripe configuration')
+      }
+
+      request.log('info', 'checkout with stripe')
       break
+    default:
+      throw Boom.badImplementation(`checkout type ${CheckoutType[checkoutType]} not implemented yet`)
   }
 
   return false
