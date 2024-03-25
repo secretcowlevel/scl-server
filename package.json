@@ -25,7 +25,7 @@
     "@babel/preset-typescript": "^7.24.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^25.2.0",
-    "@secretcowlevel/eslint-config-secretcowlevel": "0.0.9",
+    "@secretcowlevel/eslint-config-secretcowlevel": "0.0.10",
     "@types/bcrypt": "^5.0.2",
     "@types/boom": "^7.3.5",
     "@types/hapi__hapi": "^20.0.13",
