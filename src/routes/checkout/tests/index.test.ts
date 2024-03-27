@@ -1,5 +1,3 @@
-let tempToken: string
-
 const setupTestUser = async (): Promise<void> => {
   // this SHOULD be inferred from Hapi's handler where it is defined
   // but it is not...
@@ -22,7 +20,7 @@ const setupTestUser = async (): Promise<void> => {
   const data = (await globalThis.SERVER.inject(options)) as CopyOfDataFormat
   expect(data.statusCode).toBe(200)
   expect(data.result).toHaveProperty('token')
-  tempToken = data.result.token
+  globalThis.tempToken = data.result.token
 }
 
 beforeAll(async () => {
@@ -71,7 +69,7 @@ describe('Checkout Module', () => {
       const options = {
         method: 'POST',
         url: '/checkout',
-        headers: { authorization: `Bearer ${tempToken}` },
+        headers: { authorization: `Bearer ${globalThis.tempToken}` },
       }
       const data = await globalThis.SERVER.inject(options)
       expect(data.statusCode).toBe(400)

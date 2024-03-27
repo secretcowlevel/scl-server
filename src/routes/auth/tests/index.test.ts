@@ -1,5 +1,3 @@
-let tempToken: string
-
 afterAll(async () => {
   await globalThis.DB.models.User.deleteMany({ email: 'justin@secretcowlevel.com' })
 })
@@ -121,7 +119,7 @@ describe('Auth Module', () => {
 
       expect(data.statusCode).toBe(200)
       expect(data.result).toHaveProperty('token')
-      tempToken = data?.result?.token
+      globalThis.tempToken = data?.result?.token
     })
   })
 
@@ -149,7 +147,7 @@ describe('Auth Module', () => {
       const options = {
         method: 'GET',
         url: '/private',
-        headers: { authorization: `Bearer ${tempToken}` },
+        headers: { authorization: `Bearer ${globalThis.tempToken}` },
       }
       const data = await globalThis.SERVER.inject(options)
       expect(data.statusCode).toBe(200)

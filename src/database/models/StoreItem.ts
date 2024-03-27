@@ -26,10 +26,10 @@ const storeItemSchema = new Schema<IStoreItem>({
 // * Model definition
 const StoreItem = model<IStoreItem>('StoreItem', storeItemSchema)
 
-void StoreItem.create({
-  name: 'test item',
-  sku: 'test-item',
-  active: true,
-})
+// void StoreItem.create({
+//   name: 'test item',
+//   sku: 'test-item',
+//   active: true,
+// })
 
 export default StoreItem

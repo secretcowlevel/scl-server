@@ -16,4 +16,6 @@ declare global {
   var SERVER: Server
   // eslint-disable-next-line no-var
   var DB: Mongoose
+  // eslint-disable-next-line no-var
+  var tempToken: string | null
 }
