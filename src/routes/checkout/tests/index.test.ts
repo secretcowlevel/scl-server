@@ -1,4 +1,29 @@
-// let tempToken: string
+let tempToken: string
+
+const setupTestUser = async (): Promise<void> => {
+  // this SHOULD be inferred from Hapi's handler where it is defined
+  // but it is not...
+  interface CopyOfDataFormat {
+    statusCode: number
+    result: {
+      token: string
+    }
+  }
+
+  const options = {
+    method: 'POST',
+    url: '/auth/register',
+    payload: {
+      name: 'Justin Reynard',
+      email: 'justin@secretcowlevel.com',
+      password: 'this.is.a.test.password',
+    },
+  }
+  const data = (await globalThis.SERVER.inject(options)) as CopyOfDataFormat
+  expect(data.statusCode).toBe(200)
+  expect(data.result).toHaveProperty('token')
+  tempToken = data.result.token
+}
 
 beforeAll(async () => {
   // create an item thats instock
@@ -18,10 +43,14 @@ beforeAll(async () => {
   })
 
   await inactiveItem.save()
+
+  // create a test user
+  await setupTestUser()
 })
 
 afterAll(async () => {
   await globalThis.DB.models.StoreItem.deleteMany({})
+  await globalThis.DB.models.User.deleteMany({ email: 'justin@secretcowlevel.com' })
 })
 
 describe('Checkout Module', () => {
@@ -42,7 +71,7 @@ describe('Checkout Module', () => {
       const options = {
         method: 'POST',
         url: '/checkout',
-        payload: {},
+        headers: { authorization: `Bearer ${tempToken}` },
       }
       const data = await globalThis.SERVER.inject(options)
       expect(data.statusCode).toBe(400)

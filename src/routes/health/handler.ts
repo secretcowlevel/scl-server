@@ -13,8 +13,8 @@ interface HealthJSON {
 }
 
 export const getHealthJson = async (): Promise<HealthJSON> => {
-  const userCount = await User.count({})
-  const storeItemCount = await StoreItem.count({})
+  const userCount = await User.countDocuments()
+  const storeItemCount = await StoreItem.countDocuments()
 
   return {
     healthy: true,
