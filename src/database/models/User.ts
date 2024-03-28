@@ -25,6 +25,7 @@ interface UserModel extends Model<IUser, unknown, IUserMethods> {
   checkPassword: (plainTextPassword: string, hash: string) => Promise<boolean>
   checkPasswordAndReturnUser: (email: string, password: string) => Promise<HydratedDocument<IUser, IUserMethods> | null>
   hashPassword: (plainTextPassword: string) => Promise<string>
+  validateAndGetUserById: (userId: string) => Promise<HydratedDocument<IUser, IUserMethods>>
 }
 
 // *************************************
@@ -39,6 +40,16 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
 // * Method - getNumericIdentifier
 userSchema.methods.getIdentifierAsString = function () {
   return this._id.toString()
+}
+
+// *************************************
+// * Static - validateAndGetUserById
+userSchema.statics.validateAndGetUserById = async function (userId /*, requestUserId */) {
+  const userDb = await this.findOne({ _id: userId })
+  if (userDb === null) throw Boom.badRequest('User not found')
+
+  // TODO - check if requesting user has access!
+  return userDb
 }
 
 // *************************************
