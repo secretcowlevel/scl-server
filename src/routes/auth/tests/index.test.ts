@@ -149,7 +149,8 @@ describe('Auth Module', () => {
         url: '/private',
         headers: { authorization: `Bearer ${globalThis.tempToken}` },
       }
-      const data = await globalThis.SERVER.inject(options)
+      const data = (await globalThis.SERVER.inject(options)) as { statusCode: number; result: { userId: string } }
+
       expect(data.statusCode).toBe(200)
     })
   })

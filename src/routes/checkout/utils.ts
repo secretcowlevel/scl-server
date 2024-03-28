@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { type Server } from '@hapi/hapi'
 import Boom from '@hapi/boom'
 import User from '../../database/models/User'
-import StoreItem from '../../database/models/StoreItem'
+// import StoreItem from '../../database/models/StoreItem'
 
 interface ValidateTokenResponse {
   isValid: boolean
@@ -32,7 +32,7 @@ export const generateToken = (userId: string): string => {
 }
 
 const validateToken = async (decoded: DecodedToken): Promise<ValidateTokenResponse> => {
-  const user = await User.findOne({ _id: decoded.userId })
+  const user = await User.findById(decoded.userId)
 
   if (user === null) throw Boom.unauthorized()
 

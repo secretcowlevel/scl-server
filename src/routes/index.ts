@@ -2,6 +2,7 @@ import { type ServerRoute } from '@hapi/hapi'
 import healthCheckRoutes from './health/route'
 import authRoutes from './auth/route'
 import checkoutRoutes from './checkout/route'
+import { User } from '../database/models'
 
 const routes: ServerRoute[] = [
   // unique modules
@@ -22,8 +23,14 @@ const routes: ServerRoute[] = [
   {
     method: 'GET',
     path: '/private',
-    options: {},
-    handler: () => 'Successfully Authenticated',
+    options: {
+      tags: ['api', 'private'],
+    },
+    handler: async (request) => {
+      const userDb = await User.validateAndGetUserById(request.auth.credentials.userId)
+
+      return `Successfully Authenticated as ${JSON.stringify(userDb.name)}`
+    },
   },
 ]
 

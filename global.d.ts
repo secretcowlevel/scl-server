@@ -1,6 +1,12 @@
 import { type Server } from '@hapi/hapi'
 import { type Mongoose } from 'mongoose'
 
+declare module '@hapi/hapi' {
+  interface AuthCredentials {
+    userId: string
+  }
+}
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
