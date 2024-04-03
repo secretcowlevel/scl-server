@@ -11,6 +11,13 @@ export default [
       description: 'Payment Processing',
       validate: validation.checkout,
       tags: ['api', 'store'],
+      // response: {
+      //   failAction: async (req, h, err) => {
+      //     if (err) {
+      //       console.log(err)
+      //     }
+      //   },
+      // },
     },
   },
 ] as ServerRoute[]

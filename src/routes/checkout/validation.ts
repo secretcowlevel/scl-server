@@ -10,7 +10,7 @@ export default {
         Joi.object({
           sku: Joi.string().required(),
           quantity: Joi.number().required(),
-        }),
+        }).label('Item'),
       ),
     }),
   },

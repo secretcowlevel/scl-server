@@ -15,7 +15,7 @@
     "typecheck": "node_modules/.bin/tsc --noEmit",
     "prepare": "husky install",
     "dev:tsc": "tsc --watch -p .",
-    "dev:serve": "nodemon -e js -w dist/src/index.js | pino-pretty",
+    "dev:serve": "nodemon -e js dist/src/index.js | pino-pretty",
     "dev": "run-p dev:*",
     "prod:serve": "node dist/src/index.js",
     "build": "tsc --build",
