@@ -25,11 +25,12 @@ interface UserModel extends Model<IUser, unknown, IUserMethods> {
   checkPassword: (plainTextPassword: string, hash: string) => Promise<boolean>
   checkPasswordAndReturnUser: (email: string, password: string) => Promise<HydratedDocument<IUser, IUserMethods> | null>
   hashPassword: (plainTextPassword: string) => Promise<string>
+  validateAndGetUserById: (userId: string, requestUser?: UserSchema) => Promise<HydratedDocument<IUser, IUserMethods>>
 }
 
 // *************************************
 // * Schema definition!
-const userSchema = new Schema<IUser, UserModel, IUserMethods>({
+export const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: String,
@@ -39,6 +40,21 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
 // * Method - getNumericIdentifier
 userSchema.methods.getIdentifierAsString = function () {
   return this._id.toString()
+}
+
+// *************************************
+// * Static - validateAndGetUserById
+userSchema.statics.validateAndGetUserById = async function (userId, requestUser?) {
+  const userDb = await this.findOne({ _id: userId })
+  if (userDb === null) throw Boom.badRequest('User not found')
+
+  // TODO - check if requesting user has access as admin!
+
+  if (requestUser !== undefined && requestUser?._id.toString() !== userDb._id.toString()) {
+    throw Boom.forbidden('You do not have access to this user')
+  }
+
+  return userDb
 }
 
 // *************************************
@@ -75,3 +91,5 @@ userSchema.statics.hashPassword = async function (plainTextPassword: string): Pr
 const User = model<IUser, UserModel>('User', userSchema)
 
 export default User
+
+export type UserSchema = HydratedDocument<IUser, IUserMethods>
